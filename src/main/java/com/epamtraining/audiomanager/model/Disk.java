@@ -8,6 +8,9 @@ public class Disk {
     private Double diskDuration;
     private List<AudioTrack> records;
 
+    public Disk() {
+    }
+
     public Disk(String diskName) {
         this.diskName = diskName;
     }
@@ -15,6 +18,7 @@ public class Disk {
     public Disk(String diskName, List<AudioTrack> records) {
         this.diskName = diskName;
         this.records = records;
+        calculateDuration();
     }
 
     public String getDiskName() {
@@ -37,9 +41,30 @@ public class Disk {
         this.records = records;
     }
 
-    public void addTrack(AudioTrack audioTrack){
+    public void addTrack(AudioTrack audioTrack) {
+        this.records.add(audioTrack);
+        calculateDuration();
+    }
 
-    };
+    private void calculateDuration() {
+        this.diskDuration = 0.00d;
+        for (AudioTrack track : this.records) {
+            this.diskDuration += track.getDuration();
+        }
 
+    }
+
+    @Override
+    public String toString() {
+        String string = "";
+        for (AudioTrack track : getRecords()) {
+            string += track + "\n";
+        }
+
+        return "Disk Name: " + getDiskName() + "\n" +
+                "Total length of all tracks: " + getDiskDuration() + "\n" +
+                "Tracks --------------->" + "\n" +
+                string;
+    }
 
 }
